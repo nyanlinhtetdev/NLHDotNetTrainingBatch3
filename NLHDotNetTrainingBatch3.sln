@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36301.6 d17.14
+VisualStudioVersion = 17.14.36301.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLHDotNetTrainingBatch3.ConsoleApp", "NLHDotNetTrainingBatch3.ConsoleApp\NLHDotNetTrainingBatch3.ConsoleApp.csproj", "{A714DD2F-5E00-4693-A2A2-C12561AA0726}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLHDotNetTrainingBatch3.ProductnSaleProject", "NLHDotNetTrainingBatch3.ProductnSaleProject\NLHDotNetTrainingBatch3.ProductnSaleProject.csproj", "{C6FC835B-9F21-4A99-A74A-7301C762ECF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A714DD2F-5E00-4693-A2A2-C12561AA0726}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A714DD2F-5E00-4693-A2A2-C12561AA0726}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A714DD2F-5E00-4693-A2A2-C12561AA0726}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6FC835B-9F21-4A99-A74A-7301C762ECF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6FC835B-9F21-4A99-A74A-7301C762ECF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6FC835B-9F21-4A99-A74A-7301C762ECF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6FC835B-9F21-4A99-A74A-7301C762ECF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
