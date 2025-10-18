@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NLHDotNetTrainingBatch3.ProductnSaleDatabase\NLHDotNetTrainingBatch3.ProductnSaleDatabase.csproj" />
+  </ItemGroup>
+
 </Project>

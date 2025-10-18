@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLHDotNetTrainingBatch3.Con
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLHDotNetTrainingBatch3.ProductnSaleProject", "NLHDotNetTrainingBatch3.ProductnSaleProject\NLHDotNetTrainingBatch3.ProductnSaleProject.csproj", "{C6FC835B-9F21-4A99-A74A-7301C762ECF9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLHDotNetTrainingBatch3.ProductnSaleDatabase", "NLHDotNetTrainingBatch3.ProductnSaleDatabase\NLHDotNetTrainingBatch3.ProductnSaleDatabase.csproj", "{B1E07541-EE33-499B-83EA-86134E6AF027}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C6FC835B-9F21-4A99-A74A-7301C762ECF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6FC835B-9F21-4A99-A74A-7301C762ECF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6FC835B-9F21-4A99-A74A-7301C762ECF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1E07541-EE33-499B-83EA-86134E6AF027}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1E07541-EE33-499B-83EA-86134E6AF027}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1E07541-EE33-499B-83EA-86134E6AF027}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1E07541-EE33-499B-83EA-86134E6AF027}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

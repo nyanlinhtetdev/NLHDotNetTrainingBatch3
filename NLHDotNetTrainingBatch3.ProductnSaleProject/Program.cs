@@ -2,5 +2,8 @@
 
 using NLHDotNetTrainingBatch3.ProductnSaleProject;
 
-ProductnSaleDapperService dapperService = new ProductnSaleDapperService();
-dapperService.CreateSale(3, 49);
+//ProductnSaleDapperService dapperService = new ProductnSaleDapperService();
+//dapperService.CreateProducts("Air Fryer", 50, 1000000);
+
+ProductnSaleEFCoreService efcoreService = new ProductnSaleEFCoreService();
+efcoreService.CreateSales(5, 100);
