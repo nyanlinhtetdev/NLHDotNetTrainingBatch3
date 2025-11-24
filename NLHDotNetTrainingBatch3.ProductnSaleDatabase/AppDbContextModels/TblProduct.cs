@@ -18,4 +18,8 @@ public partial class TblProduct
     public DateTime CreatedDateTime { get; set; }
 
     public DateTime? ModifiedDateTime { get; set; }
+
+    public int? CategoryId { get; set; }
+
+    public virtual ProductCategory? Category { get; set; }
 }
