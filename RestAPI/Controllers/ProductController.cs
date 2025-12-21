@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NLHDotNetTrainingBatch3.ProductnSaleDatabase.AppDbContextModels;
+using RestAPI.Services;
+using static RestAPI.Enums.Enum;
 
 namespace RestAPI.Controllers;
 
@@ -8,132 +10,114 @@ namespace RestAPI.Controllers;
 [ApiController]
 public class ProductController : ControllerBase
 {
-    private readonly AppDbContext _db;
+    private readonly IProductService _productService;
 
-    public ProductController()
+    public ProductController(IProductService productService)
     {
-        _db = new AppDbContext();
+        _productService = productService;
     }
 
-    [HttpGet]
-    public IActionResult GetProducts()
+    [HttpGet("{pageNo}/{pageSize}")]
+    public IActionResult GetProducts(int pageNo, int pageSize)
     {
-        var lst = _db.TblProducts
-            .OrderByDescending(x => x.ProductId)
-            .Where(x => x.DeleteFlag == false)
-            .ToList();
-        return Ok(lst);
+        var result = _productService.GetProducts(pageNo, pageSize);
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result.Message);
+        }
+        return Ok(result.Products);
     }
 
     [HttpGet("{id}")]
     public IActionResult GetProduct(int id)
     {
-        var item = _db.TblProducts.FirstOrDefault(x => x.ProductId == id);
-        if (item is null)
+        var result = _productService.GetProductById(id);
+        if (!result.IsSuccess)
         {
-            return NotFound("Product not found.");
+            return BadRequest(result);
         }
-
-        var response = new ProductGetResponseDto
-        {
-            ProductName = item.ProductName
-        };
-        return Ok(response);
+        return Ok(result);
     }
 
     [HttpPost]
-    public IActionResult CreateProduct(ProductCreateRequestDto request)
+    public IActionResult CreateProduct(ProductRequestDto request)
     {
-        _db.TblProducts.Add(new TblProduct
+        var result = _productService.CreateProduct(request);
+        if (result.Type == EnumResultType.ValidationError)
         {
-            CreatedDateTime = DateTime.Now,
-            Price = request.Price,
-            DeleteFlag = false,
-            ProductName = request.ProductName,
-            Quantity = request.Quantity,
-        });
-        int result = _db.SaveChanges();
-        string message = result > 0 ? "Saving Successful." : "Saving Failed.";
-
-        return Ok(message);
+            return BadRequest(result);
+        }
+        if (result.Type == EnumResultType.NotFound)
+        {
+            return NotFound(result);
+        }
+        if (result.Type == EnumResultType.SystemError)
+        {
+            return StatusCode(500, result);
+        }
+        return Ok(result);
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateProduct(int id, ProductUpdateRequestDto request)
+    public IActionResult UpdateProduct(int id, ProductRequestDto request)
     {
-        var item = _db.TblProducts.FirstOrDefault(x => x.ProductId == id);
-        if (item is null)
+        var result = _productService.UpdateProduct(id, request);
+        if (result.Type == EnumResultType.ValidationError)
         {
-            return NotFound("Product not found.");
+            return BadRequest(result);
         }
-
-        item.ProductName = request.ProductName;
-        item.Price = request.Price;
-        item.Quantity = request.Quantity;
-        item.ModifiedDateTime = DateTime.Now;
-        int result = _db.SaveChanges();
-        string message = result > 0 ? "Updating Successful." : "Updating Failed.";
-
-        return Ok(message);
+        if (result.Type == EnumResultType.NotFound)
+        {
+            return NotFound(result);
+        }
+        if (result.Type == EnumResultType.SystemError)
+        {
+            return StatusCode(500, result);
+        }
+        return Ok(result);
     }
 
     [HttpPatch("{id}")]
-    public IActionResult PatchProduct(int id, ProductPatchRequestDto request)
+    public IActionResult PatchProduct(int id, ProductRequestDto request)
     {
-        var item = _db.TblProducts.FirstOrDefault(x => x.ProductId == id);
-        if (item is null)
+        var result = _productService.PatchProduct(id, request);
+        if (result.Type == EnumResultType.ValidationError)
         {
-            return NotFound("Product not found.");
+            return BadRequest(result);
         }
-
-        if (!string.IsNullOrEmpty(request.ProductName))
-            item.ProductName = request.ProductName;
-        if (request.Price is not null && request.Price > 0)
-            item.Price = request.Price ?? 0;
-        //item.Price = Convert.ToDecimal(request.Price);
-        if (request.Quantity is not null && request.Quantity > 0)
-            item.Quantity = request.Quantity ?? 0;
-        item.ModifiedDateTime = DateTime.Now;
-        int result = _db.SaveChanges();
-        string message = result > 0 ? "Patching Successful." : "Patching Failed.";
-
-        return Ok(message);
+        if (result.Type == EnumResultType.NotFound)
+        {
+            return NotFound(result);
+        }
+        if (result.Type == EnumResultType.SystemError)
+        {
+            return StatusCode(500, result);
+        }
+        return Ok(result);
     }
+    
 
     [HttpDelete("{id}")]
     public IActionResult DeleteProduct(int id)
     {
-        var item = _db.TblProducts.FirstOrDefault(x => x.ProductId == id);
-        if (item is null)
+        var result = _productService.DeleteProduct(id);
+        if (result.Type == EnumResultType.ValidationError)
         {
-            return NotFound("Product not found.");
+            return BadRequest(result);
         }
-        item.DeleteFlag = true;
-        int result = _db.SaveChanges();
-        string message = result > 0 ? "Deleting Successful." : "Deleting Failed.";
-
-        return Ok(message);
+        if (result.Type == EnumResultType.NotFound)
+        {
+            return NotFound(result);
+        }
+        if (result.Type == EnumResultType.SystemError)
+        {
+            return StatusCode(500, result);
+        }
+        return Ok(result);
     }
 }
-public class ProductCreateRequestDto
-{
-    public string ProductName { get; set; }
 
-    public int Quantity { get; set; }
-
-    public decimal Price { get; set; }
-}
-
-public class ProductUpdateRequestDto
-{
-    public string ProductName { get; set; }
-
-    public int Quantity { get; set; }
-
-    public decimal Price { get; set; }
-}
-
-public class ProductPatchRequestDto
+public class ProductRequestDto
 {
     public string? ProductName { get; set; }
 
