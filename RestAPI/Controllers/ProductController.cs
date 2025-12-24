@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NLHDotNetTrainingBatch3.ProductnSaleDatabase.AppDbContextModels;
+using RestAPI.Dtos;
 using RestAPI.Services;
 using static RestAPI.Enums.Enum;
 
@@ -21,22 +22,22 @@ public class ProductController : ControllerBase
     public IActionResult GetProducts(int pageNo, int pageSize)
     {
         var result = _productService.GetProducts(pageNo, pageSize);
-        if (!result.IsSuccess)
+        if (result.Type == EnumResultType.Success)
         {
-            return BadRequest(result.Message);
+            return Ok(result.Products);
         }
-        return Ok(result.Products);
+        return BadRequest(result.Message);
     }
-
+     
     [HttpGet("{id}")]
     public IActionResult GetProduct(int id)
     {
         var result = _productService.GetProductById(id);
-        if (!result.IsSuccess)
+        if (result.Type == EnumResultType.Success)
         {
-            return BadRequest(result);
+            return Ok(result.Product);
         }
-        return Ok(result);
+        return NotFound(result.Message);
     }
 
     [HttpPost]
@@ -115,47 +116,4 @@ public class ProductController : ControllerBase
         }
         return Ok(result);
     }
-}
-
-public class ProductRequestDto
-{
-    public string? ProductName { get; set; }
-
-    public int? Quantity { get; set; }
-
-    public decimal? Price { get; set; }
-}
-
-public class ProductGetResponseDto
-{
-    public int ProductId { get; set; }
-
-    public string ProductName { get; set; }
-
-    public int Quantity { get; set; }
-
-    public decimal Price { get; set; }
-
-    public bool DeleteFlag { get; set; }
-
-    public DateTime CreatedDateTime { get; set; }
-
-    public DateTime? ModifiedDateTime { get; set; }
-}
-
-public class ProductGetListResponseDto
-{
-    public int ProductId { get; set; }
-
-    public string ProductName { get; set; }
-
-    public int Quantity { get; set; }
-
-    public decimal Price { get; set; }
-
-    public bool DeleteFlag { get; set; }
-
-    public DateTime CreatedDateTime { get; set; }
-
-    public DateTime? ModifiedDateTime { get; set; }
 }

@@ -5,9 +5,9 @@
         public enum EnumResultType
         {
             Success = 1,
-            NotFound,
-            ValidationError,
-            SystemError
+            NotFound = 2,
+            ValidationError = 3,
+            SystemError = 4
         }
     }
 }
