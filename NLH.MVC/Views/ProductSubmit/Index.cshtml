@@ -1,0 +1,58 @@
+﻿@model ProductListResponseDto;
+
+<h1>Product List</h1>
+
+@{
+    bool isShowMessage = TempData["Message"] != null;
+    string message = "";
+    bool isSuccess = false;
+    if (isShowMessage)
+    {
+        message = Convert.ToString(TempData["Message"]);
+        isSuccess = Convert.ToBoolean(TempData["IsSuccess"]);
+        if (isSuccess)
+        {
+            <div class="alert alert-success" mb-3 role="alert">
+                @message
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger" mb-3 role="alert">
+                @message
+            </div>
+        }
+    } 
+}
+<a href="/ProductSubmit/Create" class="btn btn-success">New Product</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if(Model.Type == EnumResultType.Success)
+            {
+                foreach (var item in Model.Products){
+                    <tr>
+                        <td>@item.ProductId</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Price</td>
+                        <td>
+                            <a href="/ProductSubmit/Edit/@item.ProductId" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="/ProductSubmit/Delete/@item.ProductId" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>

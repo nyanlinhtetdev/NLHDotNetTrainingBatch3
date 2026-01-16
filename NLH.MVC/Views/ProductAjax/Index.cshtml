@@ -1,0 +1,74 @@
+﻿<h1>Product List</h1>
+
+<a href="/ProductAjax/Create" class="btn btn-success">New Product</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+</table>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            loadProducts();
+            // Event Delegation: Listen to clicks on the body,
+            // but only act if the click was on a '.btn-delete'
+            $('#tableBody').on('click', '.btnDelete', function() {
+                const id = $(this).data('id');
+                deleteBlog(id);
+            });
+        });
+
+        function loadProducts() {
+            $.ajax({
+                url: "/ProductAjax/List",
+                type: "GET",
+                success: function (response) {
+                    let tableRows = '';
+                    response.forEach(item => {
+                        tableRows += `
+                            <tr id="product-row-${item.ProductId}">
+                                <td>${item.ProductId}</td>
+                                <td>${item.ProductName}</td>
+                                <td>${item.Quantity}</td>
+                                <td>${item.Price}</td>
+                                <td>
+                                    <a href="/ProductAjax/Edit/${item.ProductId}" class="btn btn-warning btn-sm">Edit</a>
+                                    <button type="button" class="btn btn-danger btn-sm btnDelete" data-id="${item.ProductId}">Delete</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    $('#tableBody').html(tableRows);
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+
+        function deleteBlog(id){
+            $.ajax({
+                url: `/ProductAjax/Delete/${id}`,
+                type: "POST",
+                success: function (response){
+                    alert(response.Message);
+                    if(response.IsSuccess){
+                        loadProducts();
+                    }
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                }
+            })
+        }
+    </script>
+};

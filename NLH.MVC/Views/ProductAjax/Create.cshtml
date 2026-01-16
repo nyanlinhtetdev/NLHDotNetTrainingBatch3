@@ -1,0 +1,41 @@
+﻿<div class="mb-3">
+    <label class="form-label">Name</label>
+    <input type="text" id="productName" class="form-control" name="ProductName">
+</div>
+<div class="mb-3">
+    <label class="form-label">Quantity</label>
+    <input type="text" id="quantity" class="form-control" name="Quantity">
+</div>
+<div class="mb-3">
+    <label class="form-label">Price</label>
+    <input type="text" id="price" class="form-control" name="Price">
+</div>
+<button type="button" id="btnSave" class="btn btn-primary">Save</button>
+
+@section scripts{
+    <script>
+        $('#btnSave').click(function(){
+            const productName = $('#productName').val();
+            const quantity = $('#quantity').val();
+            const price = $('#price').val();
+
+            $.ajax({
+                url: "/ProductAjax/Save",
+                type: "POST",
+                data: {
+                    ProductName : productName,
+                    Quantity : quantity,
+                    Price: price
+                },
+                success: function (response){
+                    alert(response.Message);
+                    location.href = "/ProductAjax";
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                }
+            })
+        })
+        
+    </script>
+}
