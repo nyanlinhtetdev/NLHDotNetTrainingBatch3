@@ -24,9 +24,9 @@ public class ProductController : ControllerBase
         var result = _productService.GetProducts(pageNo, pageSize);
         if (result.Type == EnumResultType.Success)
         {
-            return Ok(result.Products);
+            return Ok(result);
         }
-        return BadRequest(result.Message);
+        return BadRequest(result);
     }
      
     [HttpGet("{id}")]

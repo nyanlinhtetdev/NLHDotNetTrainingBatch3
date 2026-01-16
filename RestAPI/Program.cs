@@ -11,8 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddDbContext<AppDbContext>(opt =>
-{
+builder.Services.AddDbContext<AppDbContext>(opt =>{
+
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"));
 });
 

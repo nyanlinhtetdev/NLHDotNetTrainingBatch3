@@ -21,10 +21,11 @@ public class ProductService : IProductService
     public ProductListResponseDto GetProducts(int pageNo, int pageSize)
     {
         ProductListResponseDto dto;
-        if (pageNo == 0 && pageSize == 0)
+        if (pageNo == 0 || pageSize == 0)
         {
             dto = new ProductListResponseDto
             {
+                IsSuccess = false,
                 Type = EnumResultType.ValidationError,
                 Message = "Page Number and Page Size must not be 0"
             };
@@ -48,6 +49,7 @@ public class ProductService : IProductService
 
         dto = new ProductListResponseDto
         {
+            IsSuccess = true,
             Type = EnumResultType.Success,
             Message = "Success",
             Products = products
@@ -63,6 +65,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = false,
                 Type = EnumResultType.NotFound,
                 Message = "Product not found."
             };
@@ -78,6 +81,7 @@ public class ProductService : IProductService
         };
         dto = new ProductResponseDto
         {
+            IsSuccess = true,
             Type = EnumResultType.Success,
             Message = "Success",
             Product = product
@@ -95,6 +99,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = false,
                 Type = EnumResultType.ValidationError,
                 Message = "There is no input."
             };
@@ -103,6 +108,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = false,
                 Message = "ProductName is missing.",
                 Type = EnumResultType.ValidationError
             };
@@ -112,6 +118,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = false,
                 Message = "Price is missing.",
                 Type = EnumResultType.ValidationError
             };
@@ -121,6 +128,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = false,
                 Message = "Price is negative.",
                 Type = EnumResultType.ValidationError
             };
@@ -130,6 +138,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = false,
                 Message = "Quantity is missing.",
                 Type = EnumResultType.ValidationError
             };
@@ -139,6 +148,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = false,
                 Message = "Quantity is negative.",
                 Type = EnumResultType.ValidationError
             };
@@ -165,6 +175,7 @@ public class ProductService : IProductService
             };
             dto = new ProductResponseDto
             {
+                IsSuccess = true,
                 Message = "Successfully created.",
                 Type = EnumResultType.Success,
                 Product = product
@@ -173,6 +184,7 @@ public class ProductService : IProductService
         }
         dto = new ProductResponseDto
         {
+            IsSuccess = false,
             Message = "Fail to create.",
             Type = EnumResultType.SystemError
         };
@@ -189,6 +201,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = false,
                 Type = EnumResultType.ValidationError,
                 Message = "There is no input."
             };
@@ -197,6 +210,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = false,
                 Message = "ProductName is missing.",
                 Type = EnumResultType.ValidationError
             };
@@ -206,6 +220,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = false,
                 Message = "Price is missing.",
                 Type = EnumResultType.ValidationError
             };
@@ -215,6 +230,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = false,
                 Message = "Price is negative.",
                 Type = EnumResultType.ValidationError
             };
@@ -224,6 +240,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = false,
                 Message = "Quantity is missing.",
                 Type = EnumResultType.ValidationError
             };
@@ -233,6 +250,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = false,
                 Message = "Quantity is negative.",
                 Type = EnumResultType.ValidationError
             };
@@ -243,6 +261,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = false,
                 Message = "Product not found.",
                 Type = EnumResultType.NotFound
             };
@@ -259,6 +278,7 @@ public class ProductService : IProductService
             var product = GetProductById(item.ProductId);
             dto = new ProductResponseDto
             {
+                IsSuccess = true,
                 Message = "Successfully updated.",
                 Type = EnumResultType.Success,
                 Product = product.Product
@@ -267,6 +287,7 @@ public class ProductService : IProductService
         }
         dto = new ProductResponseDto
         {
+            IsSuccess = false,
             Message = "Fail to update.",
             Type = EnumResultType.SystemError
         };
@@ -281,6 +302,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = false,
                 Message = "Id not found",
                 Type = EnumResultType.NotFound
             };
@@ -291,6 +313,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = false,
                 Message = "There is nothing to update.",
                 Type = EnumResultType.ValidationError
             };
@@ -308,6 +331,7 @@ public class ProductService : IProductService
             if (request.Price < 0)
             {
                 return new ProductResponseDto {
+                    IsSuccess = false,
                     Message = "Price is negative",
                     Type = EnumResultType.ValidationError
                 };
@@ -322,6 +346,7 @@ public class ProductService : IProductService
             {
                 return new ProductResponseDto
                 {
+                    IsSuccess = false,
                     Message = "Price is negative",
                     Type = EnumResultType.ValidationError
                 };
@@ -336,6 +361,7 @@ public class ProductService : IProductService
             var product = GetProductById(item.ProductId);
             dto = new ProductResponseDto
             {
+                IsSuccess = true,
                 Message = "Successfully updated.",
                 Type = EnumResultType.Success,
                 Product = product.Product
@@ -344,6 +370,7 @@ public class ProductService : IProductService
         }
         dto = new ProductResponseDto
         {
+            IsSuccess = false,
             Message = "Fail to update.",
             Type = EnumResultType.SystemError
         };
@@ -358,6 +385,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = false,
                 Message = "Product not found.",
                 Type = EnumResultType.NotFound
             };
@@ -371,6 +399,7 @@ public class ProductService : IProductService
         {
             dto = new ProductResponseDto
             {
+                IsSuccess = true,
                 Message = "Successfully deleted.",
                 Type = EnumResultType.Success
             };
@@ -378,6 +407,7 @@ public class ProductService : IProductService
         }
         dto = new ProductResponseDto
         {
+            IsSuccess = false,
             Message = "Fail to delete.",
             Type = EnumResultType.SystemError
         };
